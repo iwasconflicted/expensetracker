@@ -2,6 +2,7 @@ import { useState } from "react"
 import ExpenseList from "./expense-tracker/components/ExpenseList"
 import ExpenseFilter from "./expense-tracker/components/ExpenseFilter"
 import ExpenseForm from "./expense-tracker/components/ExpenseForm"
+import categories from "./expense-tracker/categories"
 
 
 // export const categories = ['Groceries', 'Utilities', 'Entertainment', 'Food', 'Shopping']
@@ -26,29 +27,21 @@ const handleDelete = (id:number) => {
 
 // Create a variable with a ternary operator, we are going to use our selected category as a boolean filter through our dummyExpensesArray
 
-const visibleExpense = selectedCategory ? dummyExpensesArray.filter(e => e.category === selectedCategory) : dummyExpensesArray
-
-  return (
-    <>
-     <h1 className="text-center">Expense Tracker</h1>
-
-     <div className="m-5">
-      <ExpenseForm/>
-
-     </div>
-
+const visibleExpense = selectedCategory ? dummyExpensesArray.filter(e => e.category === selectedCategory): dummyExpensesArray;
+return (
+  <>
+    <h1 className="text-center">Expense Tracker</h1>
     <div className="m-5">
-      <ExpenseFilter onSelectCategory={category => setSelectedCategory(category)}/>
+    <ExpenseForm addExpense={expense => setDummyExpensesArray([...dummyExpensesArray, {...expense, id: dummyExpensesArray.length + 1}])}/>
     </div>
-
-       <div className="m-5">
-      <ExpenseList expenses={visibleExpense} onDelete={handleDelete}/>
-       </div>
-        
-       
-        
-    </>
-  )
+    {/* <div className='m-5'>
+    <ExpenseFilter onSelectCategory={(category) => setSelectedCategory(category)}/>
+    </div> */}
+    <div className="m-5">
+    <ExpenseList expenses={visibleExpense} onDelete={handleDelete}/>
+    </div>
+  </>
+)
 }
 
 export default App
